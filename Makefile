@@ -12,7 +12,8 @@ all: echo $(LOCAL_INITRD)
 	rm -fr iso $(LOCAL_INITRD)
 
 echo:
-	@echo UBUNTU=$(UBUNTU)
+	@cat README
+	@echo -e \\nUBUNTU=$(UBUNTU)
 
 $(LOCAL_INITRD):
 	make -C initrd INITRD=$(INITRD)

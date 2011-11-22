@@ -1,0 +1,5 @@
+To create modules.sfs:
+	* load an Ubuntu Live CD
+	* install VirtualBox
+	* install VirtualBox Guest Additions
+	* mksquashfs /lib/modules modules.sfs -comp xz
