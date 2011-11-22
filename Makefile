@@ -16,4 +16,4 @@ echo:
 	@echo -e \\nUBUNTU=$(UBUNTU)
 
 $(LOCAL_INITRD):
-	make -C initrd INITRD=$(INITRD)
+	$(MAKE) -C initrd INITRD=$(INITRD)
