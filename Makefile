@@ -5,9 +5,7 @@ ISO=boot.iso
 all: echo $(LOCAL_INITRD)
 	mkdir -p iso/casper iso/boot/grub
 	cp -a grub.cfg iso/boot/grub
-	cp -a $(UBUNTU)/.disk iso
-	cp -a $(UBUNTU)/casper/vmlinuz iso
-	cp -a $(LOCAL_INITRD) iso
+	cp -a $(UBUNTU)/.disk $(UBUNTU)/casper/vmlinuz $(LOCAL_INITRD) iso
 	ln -sfn /dev/sr1 iso/casper/filesystem.squashfs
 	ln -sfn /dev/sr2 iso/modules.sfs
 	grub-mkrescue -o $(ISO) iso
