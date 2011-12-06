@@ -1,0 +1,8 @@
+#!/bin/bash
+echo 'Add ramdisk_size=N (N is size in Kb, half the RAM or more) to the kernel command line before testing'
+python <<<"print('Current ramdisk size: %.3f Gb' % (`blockdev --getsize /dev/ram0` / 2097152.))"
+cryptsetup -caes-xts-plain64 -hsha512 -s512 -d/dev/urandom create ram /dev/ram0
+dd if=/dev/zero of=/dev/ram0 bs=1M
+dd if=/dev/zero of=/dev/mapper/ram bs=1M
+dd if=/dev/mapper/ram of=/dev/null bs=1M
+cryptsetup remove ram
