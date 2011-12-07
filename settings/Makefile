@@ -8,7 +8,7 @@ terminal=.gconf
 vim=.vimrc
 xfce=--exclude=.config/google-chrome .config .xinitrc .xscreensaver .xserverrc
 
-all: $(foreach i,$(list),$(i).txz)
+all: $(foreach i,$(list),$(i).t)
 
-%.txz:
-	tar cJf $@ -C ~ $($(@:.txz=))
+%.t:
+	bash tar.sh $@xz $($(@:.t=))
