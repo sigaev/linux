@@ -2,6 +2,8 @@ To create modules.sfs:
 	* load an Ubuntu Live CD
 	* install VirtualBox
 	* install VirtualBox Guest Additions
+	* cp -a /lib/{firmware,modules}
 	* http://wireless.kernel.org/en/users/Drivers/b43 -> list of firmware -> b43legacy
+	* copy b43legacy to /lib/modules/firmware/
 	* ln -s /cdrom/secret /lib/modules/
 	* mksquashfs /lib/modules modules.sfs -comp xz
