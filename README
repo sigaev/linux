@@ -1,9 +1,13 @@
 To create modules.sfs:
 	* load an Ubuntu Live CD
 	* install VirtualBox
-	* install VirtualBox Guest Additions
+	* install VirtualBox Guest Additions:
+		- mount VBoxGuestAdditions.iso, run VBoxLinuxAdditions.run
 	* cp -a /lib/{firmware,modules}
 	* http://wireless.kernel.org/en/users/Drivers/b43 -> list of firmware -> b43legacy
 	* copy b43legacy to /lib/modules/firmware/
 	* ln -s /cdrom/secret /lib/modules/
+	* install NVidia drivers:
+		- Ctrl-Alt-F1, service stop lightdm, run NVIDIA-Linux-x86-???.??.run
+		- save userspace files to http://sigaev.com/programs/nvidia
 	* mksquashfs /lib/modules modules.sfs -comp xz
