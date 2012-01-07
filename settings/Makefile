@@ -9,7 +9,10 @@ terminal=.gconf
 vim=.vimrc
 xfce=--exclude=.config/google-chrome .config .xinitrc .xscreensaver .xserverrc
 
+d:=$(shell mktemp -d)
+
 all: $(foreach i,$(list),$(i).t)
+	rm -fr $(d)
 
 %.t:
-	bash tar.sh $@xz $($(@:.t=))
+	bash tar.sh $(d)/$@xz $($(@:.t=))
