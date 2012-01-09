@@ -15,4 +15,4 @@ all: $(foreach i,$(list),$(i).t)
 	rm -fr $(d)
 
 %.t:
-	bash tar.sh $(d)/$@xz $($(@:.t=))
+	./archive $(d)/$@xz $($(@:.t=))
