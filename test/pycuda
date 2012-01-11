@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PATH=`gcc-config -B 1`:$PATH LD_LIBRARY_PATH=/opt/cuda/lib python <<EOF
+from   pycuda.compiler import SourceModule
+import pycuda.driver as drv
+import numpy
+import pycuda.autoinit
+
+mod = SourceModule( '''
+	__global__ void multiply_them(float *d, float *a, float *b) {
+		const int i = threadIdx.x;
+		d[i] = a[i] * b[i];
+	}
+''' )
+
+multiply_them = mod.get_function( 'multiply_them' )
+
+a = numpy.random.randn( 400 ).astype( numpy.float32 )
+b = numpy.random.randn( 400 ).astype( numpy.float32 )
+
+d = numpy.zeros_like( a )
+multiply_them( drv.Out( d ), drv.In( a ), drv.In( b ), block=( 400, 1, 1 ) )
+
+print d - a * b
+EOF
