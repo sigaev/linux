@@ -1,4 +1,4 @@
-list=bash chrome firefox gitk ssh terminal vim xfce
+list=bash chrome firefox gitk ssh terminal vim virtualbox xfce
 
 bash=.bash_logout .bash_profile .bashrc
 chrome=.config/google-chrome/Default/Preferences
@@ -7,6 +7,7 @@ gitk=.gitk
 ssh=--no-recursion .ssh{,/authorized_keys}
 terminal=.gconf
 vim=.vimrc
+virtualbox=--exclude={\*.log\*,Snapshots} .VirtualBox
 xfce=--exclude=.config/google-chrome .config .xinitrc .xscreensaver .xserverrc
 
 d:=$(shell mktemp -d)
