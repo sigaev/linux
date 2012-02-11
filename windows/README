@@ -1,0 +1,3 @@
+This ISO is a VirtualBox virtual Live CD that loads Linux
+from the physical partition specified in grub.cfg.
+The virtual machine must have access to the partition.
