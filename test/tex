@@ -1,0 +1,31 @@
+#!/bin/bash
+
+d=`mktemp -d`
+(
+	cd $d || exit 1
+	gnuplot <<'EOF' || exit 1
+se t epsl co so
+se o 'f.tex'
+p sin(x)
+EOF
+	cat >a.tex <<'EOF'
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\begin{figure}
+\input{f}
+\end{figure}
+This is a test document.
+\end{document}
+EOF
+	ln {a,b}.tex
+	xelatex a || exit 1
+	pdflatex b || exit 1
+	ls -l {a,b}.pdf || exit 1
+	evince {a,b}.pdf
+	s=`wc -c a.pdf | cut -d\  -f1`
+	[[ 5000 -lt $s && $s -lt 5600 ]]
+)
+e=$?
+rm -fr $d
+exit $e
