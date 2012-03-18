@@ -1,9 +1,9 @@
-list=bash chrome firefox gitk ssh terminal vim virtualbox xfce
+list=bash chrome firefox git ssh terminal vim virtualbox xfce
 
 bash=.bash_logout .bash_profile .bashrc
 chrome=.config/google-chrome/Default/Preferences
 firefox=.mozilla/firefox/{profiles.ini,whgzzlr0.default/prefs.js}
-gitk=.gitk
+git=.gitconfig .gitk
 ssh=--no-recursion .ssh{,/authorized_keys}
 terminal=.gconf
 vim=.vimrc
