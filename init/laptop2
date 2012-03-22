@@ -3,6 +3,10 @@
 umask 022
 grep -q 7437 /usr/local/sbin/mount-crypt.sh \
 	&& sed -i s,port=7437,port=7445, /usr/local/sbin/mount-crypt.sh
+grep -q ssd /etc/fstab \
+	|| sed -i '/LABEL=\(root\|home\)/s/\(noatime[^ ]*\)    /\1,ssd/' /etc/fstab
+grep -q ssd /proc/mounts \
+	|| for i in / /home; do mount -oremount $i; done
 mkdir -p /mnt/ntfs{1,2}
 if grep -q aes /proc/cpuinfo; then
 	mount -rtntfs -ouid=1000,gid=100 /dev/sda1 /mnt/ntfs1
