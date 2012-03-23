@@ -1,0 +1,38 @@
+#!/usr/bin/python3
+
+import os
+from tkinter import *
+
+class Application( Frame ):
+	def cb_dpms( self ):
+		print( 'v[0]: ', self.var[ 0 ].get() )
+	
+	def cb_display( self ):
+		print( 'v[1]: ', self.var[ 1 ].get() )
+	
+	def cb_audio( self ):
+		print( 'v[2]: ', self.var[ 2 ].get() )
+	
+	def cb_suspend( self ):
+		for x, var, cb in zip( ( 1, 0, 0 ), self.var, self.cb ):
+			if x != var.get():
+				var.set( x )
+				cb()
+		os.system( 'echo sudo pm-suspend' )
+
+	def widgets( self ):
+		for t, var, cb in zip( ( 'DPMS', 'Extra display', 'HDMI audio' ), self.var, self.cb ):
+			Checkbutton( self, text=t, variable=var, command=cb ).grid( sticky=W )
+		Button( self, text='Suspend', command=self.cb_suspend ).grid( sticky=W+E )
+
+	def __init__( self, master ):
+		Frame.__init__( self, master )
+		self.pack()
+		self.var = [ IntVar() for x in range( 3 ) ]
+		self.cb = self.cb_dpms, self.cb_display, self.cb_audio
+		self.widgets()
+	
+root = Tk()
+root.title( 'Helper' )
+app = Application( master=root )
+app.mainloop()
