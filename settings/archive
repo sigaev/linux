@@ -7,7 +7,7 @@ mkdir $d{,~}
 tar xJC $d -f $1
 tar xJC $d~ -f `basename $1`
 diff -ru $d{~,} && exec rm -fr $d{,~} $1
-echo -n 'Accept diff (yes/no)? '
+echo -n 'Accept diff (yes/[no])? '
 read q
 [[ yes == $q ]] && mv $1 .
 exec rm -fr $d{,~} $1
