@@ -39,7 +39,7 @@ done >/dev/null
 			if y != x.state[ 0 ].get():
 				x.state[ 0 ].set( y )
 				x()
-		os.system( 'echo sudo pm-suspend' )
+		os.system( 'sudo pm-suspend' )
 
 	for x in cb_dpms, cb_display, cb_audio:
 		x.state = []
