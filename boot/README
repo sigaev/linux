@@ -1,4 +1,5 @@
 To create modules-$ARCH.sfs:
+	* turn off discrete graphics
 	* load an Ubuntu Live CD
 	* install VirtualBox
 	* install VirtualBox Guest Additions:
@@ -8,6 +9,6 @@ To create modules-$ARCH.sfs:
 	* [x86] copy b43legacy to /lib/modules/firmware/
 	* ln -s /cdrom/secret /lib/modules/
 	* install NVidia drivers:
-		- Ctrl-Alt-F1, service stop lightdm, run NVIDIA-Linux-$ARCH-???.??.run
+		- Ctrl-Alt-F1, service lightdm stop, run NVIDIA-Linux-$ARCH-???.??.run
 		- save userspace files to http://sigaev.com/programs/nvidia-$ARCH
 	* mksquashfs /lib/modules modules-$ARCH.sfs -comp xz
