@@ -1,3 +1,0 @@
-#!/bin/bash
-
-grep -q hw:1,7 /etc/pulse/default.pa && sed -i /hw:1,7/d /etc/pulse/default.pa
