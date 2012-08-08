@@ -13,6 +13,7 @@ xfce=--exclude=.config/google-chrome .config .xinitrc .xscreensaver .xserverrc
 d:=$(shell mktemp -d)
 
 all: $(foreach i,$(list),$(i).t)
+	aws get sigaev/linux/settings/Makefile | diff -u - Makefile || aws put 'x-amz-acl: public-read' sigaev/linux/settings/Makefile Makefile
 	rm -fr $(d)
 
 %.t:

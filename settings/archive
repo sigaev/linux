@@ -1,13 +1,14 @@
 #!/bin/bash
 
+f=sigaev/linux/settings/`basename $1`
 tar cJC ~ -f "$@"
-[[ -e `basename $1` ]] || exec mv $1 .
+[[ $(aws ls --simple $f) ]] || { aws put x-amz-acl:\ public-read $f $1; exec rm -f $1; }
 d=${1%.txz}
 mkdir $d{,~}
 tar xJC $d -f $1
-tar xJC $d~ -f `basename $1`
+aws get $f | tar xJC $d~
 diff -ru $d{~,} && exec rm -fr $d{,~} $1
 echo -n 'Accept diff (yes/[no])? '
 read q
-[[ yes == $q ]] && mv $1 .
+[[ yes == $q ]] && aws put x-amz-acl:\ public-read $f $1
 exec rm -fr $d{,~} $1
