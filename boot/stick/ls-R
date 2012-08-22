@@ -1,8 +1,11 @@
 .:
-sdb1
-sdb2
+32
+64
+grub2
+secret
+sigaev
 
-./sdb1:
+./32:
 boot.iso
 gentoo
 initrd.lz
@@ -11,25 +14,13 @@ secret
 ubuntu
 vmlinuz
 
-./sdb1/gentoo:
+./32/gentoo:
 filesystem.squashfs
 
-./sdb1/secret:
-aws.pem
-aws.txt
-etc
-jp.txt
-
-./sdb1/secret/etc:
-wpa_supplicant
-
-./sdb1/secret/etc/wpa_supplicant:
-wpa_supplicant.conf
-
-./sdb1/ubuntu:
+./32/ubuntu:
 filesystem.squashfs
 
-./sdb2:
+./64:
 boot.iso
 gentoo
 initrd.lz
@@ -38,20 +29,21 @@ secret
 ubuntu
 vmlinuz
 
-./sdb2/gentoo:
+./64/gentoo:
 filesystem.squashfs
 
-./sdb2/secret:
-aws.pem
-aws.txt
-etc
-jp.txt
+./64/ubuntu:
+filesystem.squashfs
 
-./sdb2/secret/etc:
+./grub2:
+
+./secret:
+etc
+
+./secret/etc:
 wpa_supplicant
 
-./sdb2/secret/etc/wpa_supplicant:
+./secret/etc/wpa_supplicant:
 wpa_supplicant.conf
 
-./sdb2/ubuntu:
-filesystem.squashfs
+./sigaev:
