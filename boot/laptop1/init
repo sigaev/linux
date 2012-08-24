@@ -1,0 +1,9 @@
+#!/bin/bash
+
+umask 022
+b=1
+grep -q compress /etc/fstab || b=
+
+[[ $b ]] || mount -woremount /
+[[ $b ]] || sed -i '/LABEL=root/s/\(noatime[^ ]*\) \{14\}/\1,compress=zlib/' /etc/fstab
+[[ $b ]] || mount -roremount /
