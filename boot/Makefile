@@ -44,7 +44,7 @@ modules:
 	ln -s /cdrom/secret $(DIR)/lib/modules/
 	mksquashfs $(DIR)/lib/modules $(DIR)/modules-$(VERSION).sfs -comp xz
 	rmdir /sys/fs/cgroup/cpu/vbox
-	umount $(DIR)/mnt $(DIR)/tmp/vbox $(DIR)/tmp/nvidia $(DIR)/dev/pts $(DIR)/dev $(DIR)/proc $(DIR) $(DIR)/r
+	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/dev{/pts,},/proc,,/r}
 	chmod go+rx $(DIR)
 	su sigaev -c "aws put 'x-amz-acl: public-read' 'x-amz-storage-class: REDUCED_REDUNDANCY' sigaev/linux/modules-$(VERSION).sfs $(DIR)/modules-$(VERSION).sfs"
 	mkdir -p $(DIR)/1/usr/$(LIB)/opengl/nvidia/lib
@@ -56,7 +56,7 @@ modules:
 	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{applications,doc,man/man1}},var/lib}
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
-	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox}
+	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*}
 	mv $(DIR)/usr/lib/* $(DIR)/0/usr/$(LIB)
 	mv $(DIR)/usr/share/applications/nvidia* $(DIR)/0/usr/share/applications
 	mv $(DIR)/usr/share/doc/NVIDIA* $(DIR)/0/usr/share/doc
