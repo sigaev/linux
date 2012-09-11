@@ -105,4 +105,5 @@ app = Application( master=root )
 app.mainloop()
 EOF
 	chmod +x /usr/local/bin/helper
+	sed -i 's;^sigaev.*;Cmnd_Alias NOTTY=/usr/sbin/pm-suspend,/etc/init.d/cryptnmount\nDefaults requiretty\nDefaults!NOTTY !requiretty\nsigaev ALL=NOPASSWD:ALL;' /etc/sudoers
 fi
