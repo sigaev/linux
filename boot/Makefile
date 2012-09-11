@@ -5,11 +5,11 @@ ARCH:=$(if $(findstring x86-64,$(shell file /bin/bash)),x64,x86)
 LIB=$(if $(findstring 64,$(ARCH)),lib64,lib)
 
 usage:
-	@[ -e $(UBUNTU)/.disk ] || (rmdir $(DIR); ! echo -e 'Usage: make boot UBUNTU=<mounted Ubuntu ISO> VERSION=<Boot version: x{86|64}-UU.UU>\nOr:    make modules UBUNTU=<mounted Ubuntu ISO> VBOX=<VirtualBox .deb file> NVIDIA=<NVidia .run file> VERSION=<Modules version: x{86|64}-UU.UU-V.V.VV-NNN.NN-Z.Z.Z.ZZ>' >&2)
+	@[ -e $(UBUNTU)/.disk ] || (rmdir $(DIR); ! echo -e 'Usage: make boot UBUNTU=<mounted Ubuntu ISO> VERSION=<Boot version: x{86|64}-UU.UU> [NOZFS=1]\nOr:    make modules UBUNTU=<mounted Ubuntu ISO> VBOX=<VirtualBox .deb file> NVIDIA=<NVidia .run file> VERSION=<Modules version: x{86|64}-UU.UU-V.V.VV-NNN.NN-Z.Z.Z.ZZ>' >&2)
 
 boot:
 	@echo -e UBUNTU=$(UBUNTU)\\nVERSION=$(VERSION)
-	$(MAKE) -C initrd INITRD=$(UBUNTU)/casper/initrd.lz DIR=$(DIR)
+	$(MAKE) -C initrd INITRD=$(UBUNTU)/casper/initrd.lz DIR=$(DIR) NOZFS=$(NOZFS)
 	mkdir -p $(DIR)/casper $(DIR)/boot/grub
 	cp -a $(UBUNTU)/.disk $(UBUNTU)/casper/vmlinuz $(DIR)
 	cp -a grub.cfg $(DIR)/boot/grub
