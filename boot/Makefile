@@ -5,7 +5,7 @@ ARCH:=$(if $(findstring x86-64,$(shell file /bin/bash)),x64,x86)
 LIB=$(if $(findstring 64,$(ARCH)),lib64,lib)
 
 usage:
-	@[ -e $(UBUNTU)/.disk ] || (rmdir $(DIR); ! echo -e 'Usage: make boot UBUNTU=<mounted Ubuntu ISO> VERSION=<Boot version: x{86|64}-UU.UU>\nOr:    make modules UBUNTU=<mounted Ubuntu ISO> VBOX=<VirtualBox .deb file> NVIDIA=<NVidia .run file> VERSION=<Modules version: x{86|64}-UU.UU-V.V.VV-NNN.NN-Z.Z.Z.ZZrcZZ>' >&2)
+	@[ -e $(UBUNTU)/.disk ] || (rmdir $(DIR); ! echo -e 'Usage: make boot UBUNTU=<mounted Ubuntu ISO> VERSION=<Boot version: x{86|64}-UU.UU>\nOr:    make modules UBUNTU=<mounted Ubuntu ISO> VBOX=<VirtualBox .deb file> NVIDIA=<NVidia .run file> VERSION=<Modules version: x{86|64}-UU.UU-V.V.VV-NNN.NN-Z.Z.Z.ZZ>' >&2)
 
 boot:
 	@echo -e UBUNTU=$(UBUNTU)\\nVERSION=$(VERSION)
@@ -42,7 +42,7 @@ modules:
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-add-repository -y ppa:zfs-native/stable
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get update
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get -y install ubuntu-zfs
-	[ x86 = $(ARCH) ] || cp -a $(DIR)/lib/libselinux.so.* $(DIR)
+	[ x86 = $(ARCH) ] || cp -a $(DIR)/lib/*gnu/libselinux.so.* $(DIR)
 	cp -a $(DIR)/lib/firmware $(DIR)/lib/modules
 	[ x64 = $(ARCH) ] || wget -qO- s3.amazonaws.com/sigaev/linux/b43legacy.txz | tar xJC $(DIR)/lib/modules/firmware
 	ln -s /cdrom/secret $(DIR)/lib/modules/
