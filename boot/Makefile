@@ -39,8 +39,12 @@ modules:
 	mkdir /sys/fs/cgroup/cpu/vbox
 	bash -c "echo $$$$ >/sys/fs/cgroup/cpu/vbox/tasks; exec chroot $(DIR) /mnt/VBoxLinuxAdditions.run"
 	xargs -ra/sys/fs/cgroup/cpu/vbox/tasks kill
-	#TODO: install ZFS/b43
+	[ x86 = $(ARCH) ] || chroot $(DIR) apt-add-repository -y ppa:zfs-native/stable
+	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get update
+	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get -y install ubuntu-zfs
+	[ x86 = $(ARCH) ] || cp -a $(DIR)/lib/libselinux.so.* $(DIR)
 	cp -a $(DIR)/lib/firmware $(DIR)/lib/modules
+	[ x64 = $(ARCH) ] || wget -qO- s3.amazonaws.com/sigaev/linux/b43legacy.txz | tar xJC $(DIR)/lib/modules/firmware
 	ln -s /cdrom/secret $(DIR)/lib/modules/
 	mksquashfs $(DIR)/lib/modules $(DIR)/modules-$(VERSION).sfs -comp xz
 	rmdir /sys/fs/cgroup/cpu/vbox
@@ -56,7 +60,7 @@ modules:
 	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{applications,doc,man/man1}},var/lib}
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
-	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*}
+	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*,dkms,python*}
 	mv $(DIR)/usr/lib/* $(DIR)/0/usr/$(LIB)
 	mv $(DIR)/usr/share/applications/nvidia* $(DIR)/0/usr/share/applications
 	mv $(DIR)/usr/share/doc/NVIDIA* $(DIR)/0/usr/share/doc
@@ -64,6 +68,18 @@ modules:
 	mv $(DIR)/var/lib/nvidia $(DIR)/0/var/lib
 	tar cJf $(DIR)/0.txz -C $(DIR)/0 `ls $(DIR)/0`
 	tar cJf $(DIR)/1.txz -C $(DIR)/1 `ls $(DIR)/1`
+	mkdir -p $(DIR)/u/{etc,$(LIB),sbin,usr/{sbin,share/{doc,man/man{5,8}}}}
+	[ x86 = $(ARCH) ] || mv $(DIR)/etc/hostid $(DIR)/u/etc
+	[ x86 = $(ARCH) ] || mv $(DIR)/lib{/{lib*,udev},selinux*} $(DIR)/u/$(LIB)
+	[ x86 = $(ARCH) ] || mv $(DIR)/sbin/*z* $(DIR)/u/sbin
+	[ x86 = $(ARCH) ] || mv $(DIR)/usr/sbin/spl* $(DIR)/u/usr/sbin
+	[ x86 = $(ARCH) ] || mv $(DIR)/usr/share/doc/{lib,u,zfs,spl}* $(DIR)/u/usr/share/doc
+	[ x86 = $(ARCH) ] || mv $(DIR)/usr/share/man/man5/vdev* $(DIR)/u/usr/share/man/man5
+	[ x86 = $(ARCH) ] || mv $(DIR)/usr/share/man/man8/{vdev,z}* $(DIR)/u/usr/share/man/man8
+	[ x86 = $(ARCH) ] || tar cJf $(DIR)/u.txz -C $(DIR)/u `ls $(DIR)/u`
+	[ x86 = $(ARCH) ] || tar cJf $(DIR)/$(KERNEL).txz -C $(DIR)/lib/modules $(KERNEL)/updates
 	su sigaev -c "aws put 'x-amz-acl: public-read' 'x-amz-storage-class: REDUCED_REDUNDANCY' sigaev/linux/nvidia/$(ARCH)/0.txz $(DIR)/0.txz"
 	su sigaev -c "aws put 'x-amz-acl: public-read' 'x-amz-storage-class: REDUCED_REDUNDANCY' sigaev/linux/nvidia/$(ARCH)/1.txz $(DIR)/1.txz"
+	[ x86 = $(ARCH) ] || su sigaev -c "aws put 'x-amz-acl: public-read' 'x-amz-storage-class: REDUCED_REDUNDANCY' sigaev/linux/zfs/u.txz $(DIR)/u.txz"
+	[ x86 = $(ARCH) ] || su sigaev -c "aws put 'x-amz-acl: public-read' 'x-amz-storage-class: REDUCED_REDUNDANCY' sigaev/linux/zfs/$(KERNEL).txz $(DIR)/$(KERNEL).txz"
 	rm -fr $(DIR)
