@@ -47,6 +47,10 @@ modules:
 	[ x64 = $(ARCH) ] || wget -qO- s3.amazonaws.com/sigaev/linux/b43legacy.txz | tar xJC $(DIR)/lib/modules/firmware
 	ln -s /cdrom/secret $(DIR)/lib/modules/
 	mksquashfs $(DIR)/lib/modules $(DIR)/modules-$(VERSION).sfs -comp xz
+	unsquashfs -d $(DIR)/test-sfs $(DIR)/modules-$(VERSION).sfs
+	rm $(DIR)/{lib/modules,test-sfs}/{secret,$(KERNEL)/build}
+	diff -ru $(DIR)/{lib/modules,test-sfs}
+	rm -fr $(DIR)/test-sfs
 	rmdir /sys/fs/cgroup/cpu/vbox
 	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/dev{/pts,},/proc,,/r}
 	chmod go+rx $(DIR)
