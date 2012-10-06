@@ -37,9 +37,14 @@ modules:
 	chroot $(DIR) env MAKEFLAGS=-s sh /tmp/nvidia -a -q --no-runlevel-check -k $(KERNEL)
 	chroot $(DIR) dpkg -i /tmp/vbox || chroot $(DIR) apt-get -yf install
 	mount -r $(DIR)/usr/share/virtualbox/VBoxGuestAdditions.iso $(DIR)/mnt
-	mkdir /sys/fs/cgroup/cpu/vbox
-	bash -c "echo $$$$ >/sys/fs/cgroup/cpu/vbox/tasks; exec chroot $(DIR) /mnt/VBoxLinuxAdditions.run"
-	xargs -ra/sys/fs/cgroup/cpu/vbox/tasks kill
+	bash -c "\
+		mkdir /sys/fs/cgroup/cpu/user/$$$$ || exit 1;\
+		echo $$$$ >/sys/fs/cgroup/cpu/user/$$$$/tasks ;\
+		echo 1 >/sys/fs/cgroup/cpu/user/$$$$/notify_on_release ;\
+		chroot $(DIR) /mnt/VBoxLinuxAdditions.run ;\
+		e=$$? ;\
+		xargs -ra/sys/fs/cgroup/cpu/user/$$$$/tasks kill ;\
+		exit $$e"
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-add-repository -y ppa:zfs-native/stable
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get update
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-get -y install ubuntu-zfs
@@ -52,7 +57,6 @@ modules:
 	rm $(DIR)/{lib/modules,test-sfs}/{secret,$(KERNEL)/build}
 	diff -ru $(DIR)/{lib/modules,test-sfs}
 	rm -fr $(DIR)/test-sfs
-	rmdir /sys/fs/cgroup/cpu/vbox
 	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/dev{/pts,},/proc,,/r}
 	chmod go+rx $(DIR)
 	$(call aws_put,modules-$(VERSION).sfs,$(DIR)/modules-$(VERSION).sfs)
