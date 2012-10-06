@@ -22,7 +22,6 @@ boot:
 	rm -fr $(DIR)*
 
 modules:
-	[ ! -e /usr/bin/aws ] || mv /usr/{,local/}bin/aws
 	@echo -e UBUNTU=$(UBUNTU)\\nVBOX=$(VBOX)\\nNVIDIA=$(NVIDIA)\\nVERSION=$(VERSION)
 	mkdir $(DIR)/r
 	mount -r $(UBUNTU)/casper/filesystem.squashfs $(DIR)/r
