@@ -1,0 +1,14 @@
+#!/bin/bash
+
+umask 022
+a=1
+b=1
+grep -q 7437 /usr/local/sbin/mount-crypt.sh && a=
+grep -q compress /etc/fstab || b=
+
+[[ $a && $b ]] || mount -woremount /
+[[ $a ]] || sed -i s,port=7437,port=7445, /usr/local/sbin/mount-crypt.sh
+[[ $b ]] || sed -i '/LABEL=\(root\|home\)/s/\(noatime[^ ]*\) \{26\}/\1,ssd,discard,compress=zlib/' /etc/fstab
+[[ $a && $b ]] || mount -roremount /
+
+mount -onoatime,subvol=home LABEL=root /home
