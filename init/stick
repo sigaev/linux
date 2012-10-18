@@ -1,5 +1,5 @@
 #!/bin/bash
 
-! grep -q hw:1,3 /etc/pulse/default.pa && \
+grep -q hw:1,7 /etc/pulse/default.pa && \
 	lspci | grep -q NVS.4200M && \
 	sed -i s/hw:1,7/hw:1,3/ /etc/pulse/default.pa
