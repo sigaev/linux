@@ -55,7 +55,7 @@ modules:
 	ln -s /cdrom/secret $(DIR)/lib/modules/
 	mksquashfs $(DIR)/lib/modules $(DIR)/modules-$(VERSION).sfs -comp xz
 	unsquashfs -d $(DIR)/test-sfs $(DIR)/modules-$(VERSION).sfs
-	rm $(DIR)/{lib/modules,test-sfs}/{secret,$(KERNEL)/build}
+	rm $(DIR)/{lib/modules,test-sfs}/{secret,$(KERNEL)/build,firmware/cxgb4/*}
 	diff -ru $(DIR)/{lib/modules,test-sfs}
 	rm -fr $(DIR)/test-sfs
 	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/dev{/pts,},/proc,,/r}
