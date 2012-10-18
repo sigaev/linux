@@ -43,6 +43,7 @@ modules:
 		echo 1 >/sys/fs/cgroup/cpu/user/$$$$/notify_on_release ;\
 		chroot $(DIR) /mnt/VBoxLinuxAdditions.run ;\
 		e=$$? ;\
+		echo $$$$ >/sys/fs/cgroup/cpu/user/tasks ;\
 		xargs -ra/sys/fs/cgroup/cpu/user/$$$$/tasks kill ;\
 		exit $$e"
 	[ x86 = $(ARCH) ] || chroot $(DIR) apt-add-repository -y ppa:zfs-native/stable
