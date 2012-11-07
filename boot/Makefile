@@ -67,12 +67,11 @@ modules:
 	ln -s ../xorg-x11/include $(DIR)/1/usr/$(LIB)/opengl/nvidia
 	ln -s ../../xorg-x11/extensions/libdri.so $(DIR)/1/usr/$(LIB)/opengl/nvidia/extensions
 	ln -s ../../xorg-x11/extensions/libdri2.so $(DIR)/1/usr/$(LIB)/opengl/nvidia/extensions
-	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{applications,doc,man/man1}},var/lib}
+	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{doc,man/man1}},var/lib}
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
 	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*,dkms,python*}
 	mv $(DIR)/usr/lib/* $(DIR)/0/usr/$(LIB)
-	mv $(DIR)/usr/share/applications/nvidia* $(DIR)/0/usr/share/applications
 	mv $(DIR)/usr/share/doc/NVIDIA* $(DIR)/0/usr/share/doc
 	mv $(DIR)/usr/share/man/man1/nvidia* $(DIR)/0/usr/share/man/man1
 	mv $(DIR)/var/lib/nvidia $(DIR)/0/var/lib
