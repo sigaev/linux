@@ -9,7 +9,7 @@ ssh=--no-recursion .ssh{,/authorized_keys}
 terminal=.gconf
 vim=.vimrc
 virtualbox=--exclude={\*.log\*,Snapshots} .VirtualBox
-xfce=--exclude=.config/google-chrome .config .xinitrc .xscreensaver .xserverrc
+xfce=--exclude=.config/{compiz,google\*,session-state} .config .xinitrc .xscreensaver .xserverrc
 
 d:=$(shell mktemp -d)
 
