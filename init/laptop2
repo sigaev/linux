@@ -3,6 +3,6 @@
 umask 022
 mkdir -p /mnt/ntfs{1,2}
 if grep -q aes /proc/cpuinfo; then
-	mount -rtntfs -ouid=1000,gid=100 /dev/sda1 /mnt/ntfs1
-	mount -rtntfs -ouid=1000,gid=100 /dev/sda2 /mnt/ntfs2
+	mount -rtntfs -ouid=172504,gid=5000 /dev/sda1 /mnt/ntfs1
+	mount -rtntfs -ouid=172504,gid=5000 /dev/sda2 /mnt/ntfs2
 fi
