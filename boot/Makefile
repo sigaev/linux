@@ -65,8 +65,6 @@ modules:
 	mv $(DIR)/usr/lib/libGL.so* $(DIR)/1/usr/$(LIB)/opengl/nvidia/lib
 	mv $(DIR)/usr/lib/xorg/modules/extensions $(DIR)/1/usr/$(LIB)/opengl/nvidia
 	ln -s ../xorg-x11/include $(DIR)/1/usr/$(LIB)/opengl/nvidia
-	ln -s ../../xorg-x11/extensions/libdri.so $(DIR)/1/usr/$(LIB)/opengl/nvidia/extensions
-	ln -s ../../xorg-x11/extensions/libdri2.so $(DIR)/1/usr/$(LIB)/opengl/nvidia/extensions
 	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{doc,man/man1}},var/lib}
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
