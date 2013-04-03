@@ -62,18 +62,18 @@ modules:
 	chmod go+rx $(DIR)
 	$(call aws_put,modules-$(VERSION).sfs,$(DIR)/modules-$(VERSION).sfs)
 	mkdir -p $(DIR)/1/usr/$(LIB)/opengl/nvidia/lib
-	[ -e $(DIR)/usr/lib32 ] && mkdir -p $(DIR)/1/usr/lib32/opengl/nvidia/lib
+	[ ! -e $(DIR)/usr/lib32 ] || mkdir -p $(DIR)/1/usr/lib32/opengl/nvidia/lib
 	mv $(DIR)/usr/lib/libGL.so* $(DIR)/1/usr/$(LIB)/opengl/nvidia/lib
 	mv $(DIR)/usr/lib/xorg/modules/extensions $(DIR)/1/usr/$(LIB)/opengl/nvidia
 	ln -s ../xorg-x11/include $(DIR)/1/usr/$(LIB)/opengl/nvidia
-	[ -e $(DIR)/usr/lib32 ] && mv $(DIR)/usr/lib32/libGL.so* $(DIR)/1/usr/lib32/opengl/nvidia/lib
+	[ ! -e $(DIR)/usr/lib32 ] || mv $(DIR)/usr/lib32/libGL.so* $(DIR)/1/usr/lib32/opengl/nvidia/lib
 	mkdir -p $(DIR)/0/{etc,usr/{bin,$(LIB),share/{doc,man/man1}},var/lib}
-	[ -e $(DIR)/usr/lib32 ] && mkdir $(DIR)/0/usr/lib32
+	[ ! -e $(DIR)/usr/lib32 ] || mkdir $(DIR)/0/usr/lib32
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
 	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*,dkms,python*}
 	mv $(DIR)/usr/lib/* $(DIR)/0/usr/$(LIB)
-	[ -e $(DIR)/usr/lib32 ] && mv $(DIR)/usr/lib32/* $(DIR)/0/usr/lib32
+	[ ! -e $(DIR)/usr/lib32 ] || mv $(DIR)/usr/lib32/* $(DIR)/0/usr/lib32
 	mv $(DIR)/usr/share/doc/NVIDIA* $(DIR)/0/usr/share/doc
 	mv $(DIR)/usr/share/man/man1/nvidia* $(DIR)/0/usr/share/man/man1
 	mv $(DIR)/var/lib/nvidia $(DIR)/0/var/lib
