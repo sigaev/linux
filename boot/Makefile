@@ -12,7 +12,7 @@ boot:
 	@echo -e UBUNTU=$(UBUNTU)\\nVERSION=$(VERSION)
 	$(MAKE) -C initrd INITRD=$(UBUNTU)/casper/initrd.lz DIR=$(DIR) NOZFS=$(NOZFS)
 	mkdir -p $(DIR)/casper $(DIR)/boot/grub
-	cp -a $(UBUNTU)/.disk $(UBUNTU)/casper/vmlinuz $(DIR)
+	cp -a $(UBUNTU)/.disk $(UBUNTU)/casper/vmlinuz.efi $(DIR)
 	cp -a grub.cfg $(DIR)/boot/grub
 	ln -s /dev/sr1 $(DIR)/casper/filesystem.squashfs
 	ln -s /dev/sr2 $(DIR)/modules.sfs
