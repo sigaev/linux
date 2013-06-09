@@ -30,6 +30,7 @@ modules:
 	mount -tproc proc $(DIR)/proc
 	mount -B /dev $(DIR)/dev
 	mount -B /dev/pts $(DIR)/dev/pts
+	mount -B /sys $(DIR)/sys
 	touch $(DIR)/tmp/nvidia $(DIR)/tmp/vbox
 	mount -B "$(NVIDIA)" $(DIR)/tmp/nvidia
 	mount -B "$(VBOX)" $(DIR)/tmp/vbox
@@ -58,7 +59,7 @@ modules:
 	rm $(DIR)/{lib/modules,test-sfs}/{secret,$(KERNEL)/build,firmware/cxgb4/*}
 	diff -ru $(DIR)/{lib/modules,test-sfs}
 	rm -fr $(DIR)/test-sfs
-	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/dev{/pts,},/proc,,/r}
+	umount $(DIR){/mnt,/tmp/{vbox,nvidia},/sys,/dev{/pts,},/proc,,/r}
 	chmod go+rx $(DIR)
 	$(call aws_put,modules-$(VERSION).sfs,$(DIR)/modules-$(VERSION).sfs)
 	mkdir -p $(DIR)/1/usr/$(LIB)/opengl/nvidia/lib
