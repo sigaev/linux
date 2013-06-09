@@ -72,7 +72,7 @@ modules:
 	[ ! -e $(DIR)/usr/lib32 ] || mkdir $(DIR)/0/usr/lib32
 	mv $(DIR)/etc/OpenCL $(DIR)/0/etc
 	mv $(DIR)/usr/bin/nvidia* $(DIR)/0/usr/bin
-	rm -fr $(DIR)/usr/lib/{*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*,dkms,python*}
+	rm -fr $(DIR)/usr/lib/{gcc,*gnu,VBox*,virtualbox,xorg/modules/drivers/vbox*,dkms,perl*,python*}
 	mv $(DIR)/usr/lib/* $(DIR)/0/usr/$(LIB)
 	[ ! -e $(DIR)/usr/lib32 ] || mv $(DIR)/usr/lib32/* $(DIR)/0/usr/lib32
 	mv $(DIR)/usr/share/doc/NVIDIA* $(DIR)/0/usr/share/doc
